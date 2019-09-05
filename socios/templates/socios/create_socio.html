@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% load staticfiles i18n %}
+{% load crispy_forms_tags %}
+{% load poll_extras %}
+
+{% block bodyblock %}
+  {% if registered %}
+    <h1>Se ha registrado el nuevo socio con exito</h1>
+    <hr>
+  {% else %}
+    <form class="form-group" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <h5>Informacion Personal</h5>
+      <div class="row">
+        <div class="col-md-2 col-12">{{ user_form.first_name|as_crispy_field  }}</div>
+        <div class="col-md-2 col-12">{{ user_form.nom_adicional|as_crispy_field  }}</div>
+        <div class="col-md-2 col-12">{{ user_form.last_name|as_crispy_field  }}</div>
+        <div class="col-md-2 col-12">{{ user_form.ape_materno|as_crispy_field  }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-2 col-12">{{ user_form.username|as_crispy_field  }}</div>
+        <div class="col-md-2 col-12">{{ user_form.fec_nacimiento|as_crispy_field  }}</div>
+        <div class="col-md-2 col-12">{{ user_form.estado_civil|as_crispy_field  }}</div>
+        <div class="col-md-2 col-12">{{ user_form.num_hijos|as_crispy_field  }}</div>
+      </div>
+      <h5>Informacion de Contacto</h5>
+      <div class="row">
+        <div class="col-md-3 col-12">{{ user_form.email|as_crispy_field  }}</div>
+        <div class="col-md-2 col-12">{{ user_form.tel_celular|as_crispy_field  }}</div>
+        <div class="col-md-2 col-12">{{ user_form.for_contacto|as_crispy_field  }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-12">{{ user_form.dir_domicilio|as_crispy_field  }}</div>
+        <div class="col-md-2 col-12">{{ user_form.comuna|as_crispy_field  }}</div>
+      </div>
+      <h5>Informacion Laboral</h5>
+      <div class="row">
+        <div class="col-md-2 col-12">{{ user_form.fec_ing_metro|as_crispy_field  }}</div>
+        <div class="col-md-2 col-12">{{ user_form.cargo|as_crispy_field  }}</div>
+        <div class="col-md-3 col-12">{{ user_form.lug_trabajo|as_crispy_field  }}</div>
+        <div class="col-md-3 col-12">{{ user_form.turno|as_crispy_field  }}</div>
+      </div>
+      <h5>Informacion Sindical</h5>
+      <div class="row align-items-center">
+        <div class="col-md-2 col-12">{{ user_form.fec_ing_sindicato|as_crispy_field  }}</div>
+        <div class="col-md-2 col-12">{{ user_form.car_sindical|as_crispy_field  }}</div>
+        <div class="col-md-2 col-12">{{ user_form.is_office|as_crispy_field  }}</div>
+        <div class="col-md-2 col-12">{{ user_form.estado_socio|as_crispy_field  }}</div>
+      </div>
+      <div class="row align-items-center">
+        <div class="col-md-2 col-12">{{ user_form.foto|as_crispy_field  }}</div>
+      </div>
+      <input type="submit" class="btn btn-success" value="Crear"></input>
+    </form>
+
+  {% endif %}
+{% endblock %}

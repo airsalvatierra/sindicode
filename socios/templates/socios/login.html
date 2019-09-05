@@ -1,0 +1,138 @@
+{% load staticfiles i18n %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Login - Sistema Sindicato METRO</title>
+  <!-- Bootstrap core CSS-->
+   {% block css %}
+  <link href="{%  static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="{%  static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+  <!-- Custom styles for this template-->
+  <link href="{%  static 'css/sb-admin.css' %}" rel="stylesheet">
+
+  <link href="{%  static 'vendor/bootstrap/css/especial.css' %}" rel="stylesheet">
+  {% endblock %}
+</head>
+
+<body class="bg-azul" background="{% static 'images/contratapa.png' %}">
+
+  <div class="container">
+
+    <div class="container">
+      <div class="text-center card-login mx-auto mt-5">
+          <img src="{% static 'images/logosut.png' %}" class="img-fluid rounded mx-auto d-block w-75 p-2" />
+      </div>
+    </div>
+
+    <div class="card card-login mx-auto mt-5">
+
+      <div class="card-body">
+
+        <form action="{% url 'socios:user_login' %}" method="post" id="login-form">{% csrf_token %}
+          <div class="form-group">
+            <label for="exampleInputEmail1"> Rut</label>
+            <input class="form-control" placeholder="Rut sin puntos ni guion" id="id_username" name="username" type="text" autofocus=""/>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Contraseña</label>
+            <input class="form-control" placeholder="Contraseña" id="id_password" name="password" type="password" value=""/>
+          </div>
+          <!-- <div class="form-group">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox"> Recordar contraseña</label>
+            </div>
+          </div> -->
+           <input  class="btn btn-lg btn-success btn-block" type="submit" value="Ingresar"/>
+        </form>
+
+        <div class="text-center">
+          <a class="d-block small" href="{% url 'password_reset' %}">Recuperar contraseña</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap core JavaScript-->
+   {% block js %}
+  <script src="{%  static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{%  static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="{%  static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+   {% endblock %}
+
+   <script>
+
+     $("#id_username").on("keyup", function(event) {
+       var rut = $("#id_username").val();
+       var rutFormateado = formato_rut(rut);
+       //alert(rutFormateado);
+       $("#id_username").val(rutFormateado);
+
+     } );
+
+
+
+
+     function formato_rut(rut){
+       var sRut1 = rut;
+       sRut1=sRut1.replace('-', '');// se elimina el guion
+       sRut1=sRut1.replace('.', '');// se elimina el primer punto
+       sRut1=sRut1.replace('.', '');// se elimina el segundo punto
+       sRut1 = sRut1.replace(/k$/,"K");
+
+       //contador de para saber cuando insertar el . o la -
+       var nPos = 0;
+       //Guarda el rut invertido con los puntos y el gui&oacute;n agregado
+       var sInvertido = "";
+       //Guarda el resultado final del rut como debe ser
+       var sRut = "";
+       for(var i = sRut1.length - 1; i >= 0; i-- ){
+         sInvertido += sRut1.charAt(i);
+         if (i == sRut1.length - 1 )
+           sInvertido += "-";
+         else if (nPos == 3){
+           sInvertido += ".";
+           nPos = 0;
+         }
+         nPos++;
+       }
+       for(var j = sInvertido.length - 1; j >= 0; j-- ){
+         if (sInvertido.charAt(sInvertido.length - 1) != ".")
+           sRut += sInvertido.charAt(j);
+         else if (j != sInvertido.length - 1 )
+           sRut += sInvertido.charAt(j);
+       }
+       //Pasamos al campo el valor formateado
+       return sRut.toUpperCase();
+     }
+
+     function revisarDigito( dvr ){
+       dv = dvr + ""
+
+       if ( dv != '0' && dv != '1' && dv != '2' && dv != '3' && dv != '4' && dv != '5' && dv != '6' && dv != '7' && dv != '8' && dv != '9' && dv != 'k'  && dv != 'K')   {
+
+         alert("Debe ingresar un digito verificador valido");
+
+         window.document.form1.rut.focus();
+
+         window.document.form1.rut.select();
+
+         return false;
+
+       }
+
+     return true;
+
+     }
+
+   </script>
+</body>
+
+</html>

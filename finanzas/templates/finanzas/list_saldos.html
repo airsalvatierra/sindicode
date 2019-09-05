@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% load staticfiles i18n %}
+{% load humanize %}
+
+{% block bodyblock %}
+  <div class="card mb-3">
+   <div class="card-header">
+     <i class="fa fa-table"></i>Presupuesto</div>
+   <div class="card-body">
+     <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+         <thead>
+           <tr>
+             <th>Item</th>
+             <th>Subitem</th>
+             <th>Monto</th>
+             <th>Estado</th>
+           </tr>
+         </thead>
+         <tbody>
+           {% if saldos %}
+            {% for sal in saldos %}
+             <tr>
+               <td>{{ sal.item }} </td>
+               <td>{{ sal.subitem }}</td>
+               <td>${{ sal.monto|intcomma }}</td>
+               <td>{{ sal.estado }}</td>
+             </tr>
+            {% endfor %}
+           {% else %}
+             <tr>
+               <p>Actualmente no existen movimientos financieros</p>
+             </tr>
+           {% endif %}
+         </tbody>
+       </table>
+     </div>
+     <a href="xls/" class="btn btn-primary" role="button" aria-pressed="true">Exportar a Excel</a>
+     <a href="pdf/" class="btn btn-primary" role="button" aria-pressed="true">Exportar a PDF</a>
+   </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% load staticfiles i18n %}
+{% load crispy_forms_tags %}
+
+{% block bodyblock %}
+  <!-- Form para informacion del Socio -->
+  <form class="form-group" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-3 col-12">{{ socio_form.username|as_crispy_field  }}</div>
+      <div class="col-md-4 col-12">{{ socio_form.first_name|as_crispy_field  }}</div>
+      <div class="col-md-4 col-12">{{ socio_form.last_name|as_crispy_field  }}</div>
+    </div>
+  </form>
+
+  <div class="container">
+    <div class="card mb-3">
+     <div class="card-header">
+       <i class="fa fa-table"></i>Lista de Socios con Roles</div>
+     <div class="card-body">
+       <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+           <thead>
+             <tr>
+               <th>Rol</th>
+               <th>Estado</th>
+             </tr>
+           </thead>
+           <tbody>
+             {% if roles_socio %}
+               <tr>
+                 <td>Administracion</td>
+                 <td>
+                   {% for rol in roles_socio %}
+                    {% if rol.rol.tipo_rol == "Administracion"%}Vigente{% else %}No Vigente{% endif %}
+                   {% endfor %}
+                 </td>
+               </tr>
+
+              {% for lista in roles_socio %}
+               <tr>
+                 <td>{{ lista.rol }} </td>
+                 <td>Hola</td>
+               </tr>
+              {% endfor %}
+             {% else %}
+               <tr>
+                 <p>Actualmente no tiene roles asociados</p>
+               </tr>
+             {% endif %}
+           </tbody>
+         </table>
+       </div>
+     </div>
+    </div>
+  </div>
+
+{% endblock %}

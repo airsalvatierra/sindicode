@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load staticfiles i18n %}
+{% load poll_extras %}
+
+{% block bodyblock %}
+  <div class="card mb-3">
+   <div class="card-header">
+     <i class="fa fa-table"></i>Eventos </div>
+   <div class="card-body">
+     <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+         <thead>
+           <tr>
+             <th>Tipo de Carga</th>
+             <th>Nombre</th>
+             <th>Apellido Paterno</th>
+             <th>Apellido Materno</th>
+             <th>Edad</th>
+             <th>Eliminar</th>
+           </tr>
+         </thead>
+         <tbody>
+           {% if cargas %}
+            {% for lista in cargas %}
+             <tr>
+               <td>{{ lista.tipo_carga }} </td>
+               <td>{{ lista.nombre }}</td>
+               <td>{{ lista.ape_paterno }}</td>
+               <td>{% if lista.ape_materno %}{{lista.ape_materno}}{% else %}{% endif %}</td>
+               <td>{{ lista.edad }}</td>
+               <td> <a href="{% url 'socios:delete_carga' pk=lista.pk %}">Eliminar</a> </td>
+             </tr>
+            {% endfor %}
+           {% else %}
+             <tr>
+               <p>Actualmente no existen eventos</p>
+             </tr>
+           {% endif %}
+         </tbody>
+       </table>
+     </div>
+     <hr>
+     <p><a href="{% url 'socios:crear_evento' pk=socio.pk %}"><button type="button" name="button" class="btn btn-primary btn-lg btn-block">Agregar Carga</button></a></p>
+   </div>
+  </div>
+{% endblock %}

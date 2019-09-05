@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block bodyblock %}
+  <h1>Ingresar Asistencias</h1>
+  <hr>
+  <!-- {% for message in messages %}
+    <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{ message }}
+    </div>
+  {% endfor %} -->
+  <form method="POST" class="form" enctype="multipart/form-data" action="">
+    {% csrf_token %}
+    {{ asistenciaenc_form.tipo_evento|as_crispy_field }}
+    {{ asistenciaenc_form.fec_evento|as_crispy_field }}
+    {{ asistenciaenc_form.descripcion|as_crispy_field }}
+    {{ asistenciaenc_form.archivo|as_crispy_field }}
+    {{ asistenciaenc_form.acta|as_crispy_field }}
+  <input type="submit" class="btn btn-primary" value="Guardar"></input>
+  </form>
+{% endblock %}

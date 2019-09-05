@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load staticfiles i18n %}
+{% load crispy_forms_tags %}
+{% load poll_extras %}
+{% load humanize %}
+
+{% block bodyblock %}
+  <form class="form-group" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h3>Informacion del Movimiento</h3>
+    <p><strong>Folio:</strong> {{ mov.folio }}</p>
+    <p><strong>Fecha:</strong> {{ mov.fecha|date:"d/M/Y"}}</p>
+    <p><strong>Item:</strong> {{ mov.item_linked }}</p>
+    <p><strong>Tipo de Movimiento:</strong> {{ mov.tipo_mov }}</p>
+    <p><strong>Monto:</strong> {{ mov.monto|intcomma }}</p>
+    <p><strong>Estado Movimiento:</strong> {{ mov.estado }}</p>
+    <hr>
+    <h2>¿Esta seguro que desea eliminar este movimiento financiero?</h2>
+    <hr>
+    <input type="submit" class="btn btn-danger" value="Confirmar"></input>
+    <a class="btn btn-secondary" href="{% url 'finanzas:edit_movimiento' pk=mov.pk %}">Cancelar</a>
+  </form>
+
+{% endblock %}

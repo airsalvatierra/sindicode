@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% load staticfiles i18n %}
+{% load humanize %}
+
+{% block bodyblock %}
+  <div class="card mb-3">
+   <div class="card-header">
+     <i class="fa fa-table"></i>Movimientos Financieros del Sindicato</div>
+   <div class="card-body">
+     <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+         <thead>
+           <tr>
+             <th>Folio</th>
+             <th>Fecha</th>
+             <th>Item</th>
+             <th>Subitem</th>
+             <th>Tipo</th>
+             <th>Monto</th>
+             <th>Estado</th>
+           </tr>
+         </thead>
+         <tbody>
+           {% if movimientos %}
+            {% for mov in movimientos %}
+             <tr>
+               <td> <a href="{% url 'finanzas:view_movimiento' pk=mov.pk %}">{{mov.folio}}</a> </td>
+               <td>{{ mov.fecha|date:"d/M/Y" }}</td>
+               <td>{{ mov.item }}</td>
+               <td>{{ mov.subitem }}</td>
+               <td>{{ mov.tipo_mov }}</td>
+               <td>${% if mov.monto %}{{mov.monto|intcomma }}{% else %}0{% endif %}</td>
+               <td>{{ mov.estado }}</td>
+             </tr>
+            {% endfor %}
+           {% else %}
+             <tr>
+               <p>Actualmente no existen movimientos financieros</p>
+             </tr>
+           {% endif %}
+         </tbody>
+       </table>
+     </div>
+   </div>
+  </div>
+
+  <!-- <form action="xls/" enctype="multipart/form-data" method="POST" >
+    {% csrf_token %}
+  <div class="form-row align-items-center">
+    <div class="col-auto">
+      <label class="sr-only" for="inlineFormInput">Desde</label>
+      <input type="text" class="form-control textinput textInput form-control" id="desde"
+      date-provide="datepicker" data-date-language="es" name="desde">
+    </div>
+    <div class="col-auto">
+      <label class="sr-only" for="inlineFormInput">Hasta</label>
+      <input type="text" class="form-control mb-2" id="hasta" date-provide="datepicker"
+      name="hasta" >
+    </div>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputState">State</label>
+      <select id="inputState" class="form-control" name="tipo">
+        <option value="Excel" selected>Excel</option>
+        <option value="PDF">PDF</option>
+      </select>
+    </div>
+    <div class="col-auto">
+      <input type="submit" class="btn btn-success" value="Generar Excel"></input>
+    </div>
+  </div>
+</form> -->
+
+{% endblock %}

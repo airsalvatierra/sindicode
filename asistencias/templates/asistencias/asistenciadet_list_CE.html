@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+{% load poll_extras %}
+
+{% block bodyblock %}
+  <!-- Example DataTables Card-->
+  <div class="card mb-3">
+    <div class="card-header">
+      <i class="fa fa-table"></i>Detalle de Asistencia - Comite de Etica</div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Rut Socio</th>
+              <th>Estado Asistencia</th>
+              <th>Correo Notificacion</th>
+              <th>Estado Notificacion</th>
+              <th>Estado Justificacion</th>
+              <th>Estado Apelacion</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for list in lista_detalle %}
+              <tr>
+                <td> <a href="{% url 'asistencias:detalle_CE' pk=list.pk %}">{{list.rut_socio|rut_format}}</a> </td>
+                <td>{{list.est_asistencia}}</td>
+                <td>{{list.email}}</td>
+                <td>{% if list.est_notificacion == 'Notificado' %}{{list.est_notificacion}}{% else %}{% endif %}</td>
+                <td>{% if list.est_justificacion %}{{list.est_justificacion}}{% else %}-{% endif %}</td>
+                <td>{% if list.est_apelacion %}{{list.est_apelacion}}{% else %}-{% endif %}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}

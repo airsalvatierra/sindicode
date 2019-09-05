@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block navbarizquierdo %}
+  {% for rol in roles %}
+    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+      <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
+        <i class="fa fa-fw fa-file"></i>
+        <span class="nav-link-text">Example Pages</span>
+      </a>
+      <ul class="sidenav-second-level collapse" id="collapseExamplePages">
+        {% for fun in fuciones %}
+          <li><a href="login.html">Login Page</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
+      <a class="nav-link" href="#">
+        <i class="fa fa-fw fa-link"></i>
+        <span class="nav-link-text">Link</span>
+      </a>
+    </li>   -->
+  {% endfor %}
+{% endblock %}
+
+{% block bodyblock %}
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#">Sistema</a>
+        </li>
+        <li class="breadcrumb-item active">Socios</li>
+      </ol>
+      <!-- Icon Cards-->
+      <!-- Area Chart Example-->
+       <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-table"></i> Lista de Socios</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Rut</th>
+                  <th>Nombre</th>
+                  <th>Apellido Paterno</th>
+                  <th>Apellido Materno</th>
+                 <!--  <th>Fecha de Nacimiento</th> -->
+                  <th>Editar</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {% if socios %}
+                {% for lista in socios %}
+                <tr>
+                  <td>{{ lista.rut }}</td>
+                  <td>{{ lista.nombres }}</td>
+                  <td>{{ lista.apellido_paterno }}</td>
+                  <td>{{ lista.apellido_materno }}</td>
+                 <!--  <td>{{ lista.fecha_nacimiento }}</td> -->
+                  <td><i class="fa fa-fw fa-area-chart"></i></td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                  <td>no</td>
+                  <td>entro</td>
+                </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+      </div>
+{% endblock %}

@@ -1,0 +1,17 @@
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+# Ignorar archivos
+socios/__pycache__/*
+socios/migrations/__pycache__/*
+socios/templatetags/__pycache__/*
+finanzas/__pycache__/*
+finanzas/migrations/__pycache__/*
+asistencias/__pycache__/*
+asistencias/migrations/__pycache__/*
+sindicato/__pycache__/*
+static/*
+requirements.txt

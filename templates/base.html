@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+{% load staticfiles i18n %}
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Intranet Sindicato Unificado Metro</title>
+  <!-- Bootstrap core CSS-->
+  {% block css %}
+    <link href="{%  static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="{%  static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- Page level plugin CSS-->
+    <link href="{%  static 'vendor/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="{%  static 'css/sb-admin.css' %}" rel="stylesheet">
+
+    <link href="{%  static 'css/bootstrap-datepicker3.min.css' %}" rel="stylesheet">
+    <!-- <link href="{%  static 'css/bootstrap-datepicker.min.css' %}" rel="stylesheet"> -->
+    <link href="{%  static 'vendor/bootstrap/css/especial.css' %}" rel="stylesheet">
+  {% endblock %}
+</head>
+
+<body class="fixed-nav sticky-footer bg-azul" id="page-top">
+  <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-azul fixed-top" id="mainNav">
+    <a class="navbar-brand text-white" href="{% url 'home' %}">
+      <img src="{% static 'images/logosut.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+      IntraSut
+    </a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <!-- Empieza Menu lateral izquierdo -->
+      <ul class="navbar-nav navbar-sidenav bg-azul" id="exampleAccordion">
+
+        <!-- comienza block para inestar los links del menu lateral izquierdo -->
+        {% for rol in roles %}
+          {% if rol.rol.tipo_rol == 'Mantencion' %}
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+              <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMantencion" data-parent="#exampleAccordion">
+                <i class="fa fa-fw fa-file"></i>
+                <span class="nav-link-text text-white">Mantencion</span>
+              </a>
+              <ul class="sidenav-second-level collapse" id="collapseMantencion">
+                  <li><a class="bg-azul text-white" href="{% url 'socios:nuevo' %}">Crear Socio</a></li>
+                  <li><a class="bg-azul text-white" href="{% url 'socios:lista' %}">Mantencion Socio</a></li>
+              </ul>
+            </li>
+          {% endif %}
+          {% if rol.rol.tipo_rol == 'Asistencia' %}
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+              <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseAsistencia" data-parent="#exampleAccordion">
+                <i class="fa fa-fw fa-file"></i>
+                <span class="nav-link-text text-white">Asistencia</span>
+              </a>
+              <ul class="sidenav-second-level collapse" id="collapseAsistencia">
+                  <li><a class="bg-azul text-white" href="{% url 'asistencias:nueva' %}">Ingreso Asistencia</a></li>
+                  <li><a class="bg-azul text-white" href="{% url 'asistencias:lista' %}">Reporte Asistencia</a></li>
+              </ul>
+            </li>
+          {% endif %}
+          {% if rol.rol.tipo_rol == 'Finanzas' %}
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+              <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseFinanzas" data-parent="#exampleAccordion">
+                <i class="fa fa-fw fa-file"></i>
+                <span class="nav-link-text text-white">Finanzas</span>
+              </a>
+              <ul class="sidenav-second-level collapse" id="collapseFinanzas">
+                  <li><a class="bg-azul text-white" href="{% url 'finanzas:crear' %}">Ingreso Movimiento</a></li>
+                  <li><a class="bg-azul text-white" href="{% url 'finanzas:movimientos' %}">Ver/Editar Movimientos</a></li>
+                  <li><a class="bg-azul text-white" href="{% url 'finanzas:saldos' %}">Presupuesto</a></li>
+              </ul>
+            </li>
+          {% endif %}
+          {% if rol.rol.tipo_rol == 'Contador' %}
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+              <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseContabilidad" data-parent="#exampleAccordion">
+                <i class="fa fa-fw fa-file"></i>
+                <span class="nav-link-text text-white">Contabilidad</span>
+              </a>
+              <ul class="sidenav-second-level collapse" id="collapseContabilidad">
+                  <li><a class="bg-azul text-white" href="{% url 'finanzas:movimientos_edit'%}">Ver/Editar Movimientos</a></li>
+                  <li><a class="bg-azul text-white" href="{% url 'finanzas:cerrar_mes' %}">Cerrar Mes</a></li>
+                  <li><a class="bg-azul text-white" href="{% url 'finanzas:add_presupuesto_masivo'%}">Mantenedor Presupuesto</a></li>
+              </ul>
+            </li>
+          {% endif %}
+          {% if rol.rol.tipo_rol == 'Historial' %}
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+              <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseHistorial" data-parent="#exampleAccordion">
+                <i class="fa fa-fw fa-file"></i>
+                <span class="nav-link-text text-white">Log</span>
+              </a>
+              <ul class="sidenav-second-level collapse" id="collapseHistorial">
+                  <li><a class="bg-azul text-white" href="{% url 'socios:log_socios' %}#">Socios</a></li>
+                  <li><a class="bg-azul text-white" href="{% url 'finanzas:log_finanzas' %}">Finanzas</a></li>
+              </ul>
+            </li>
+          {% endif %}
+          {% if rol.rol.tipo_rol == 'Comite Etica' %}
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+              <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComiteEtica" data-parent="#exampleAccordion">
+                <i class="fa fa-fw fa-file"></i>
+                <span class="nav-link-text text-white">Comite Etica</span>
+              </a>
+              <ul class="sidenav-second-level collapse" id="collapseComiteEtica">
+                  <li><a class="bg-azul text-white" href="{% url 'asistencias:nuevaCE' %}">Ingreso Asistencia</a></li>
+                  <li><a class="bg-azul text-white" href="{% url 'asistencias:lista_CE' %}">Justificacion Asistencia</a></li>
+              </ul>
+            </li>
+          {% endif %}
+          <!-- {% if rol.rol.tipo_rol == 'Administracion' %}
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+              <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseAdministracion" data-parent="#exampleAccordion">
+                <i class="fa fa-fw fa-file"></i>
+                <span class="nav-link-text bg-azul text-white">Administracion</span>
+              </a>
+              <ul class="sidenav-second-level collapse" id="collapseAdministracion">
+                  <li><a href="#"</a>Roles</li>
+              </ul>
+            </li>
+          {% endif %} -->
+          {% if rol.rol.tipo_rol == 'VerFinanzas' %}
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+              <a class="nav-link" href={% url 'finanzas:mov_socios' %}>
+                <i class="fa fa-fw fa-dashboard"></i>
+                <span class="nav-link-text text-white">Finanzas Sindicato</span>
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+        {% if user.last_login %}
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+            <a class="nav-link" href={% url 'socios:mi_informacion' %}>
+              <i class="fa fa-fw fa-dashboard"></i>
+              <span class="nav-link-text text-white">Mi informacion</span>
+            </a>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+            <a class="nav-link" href={% url 'change_password' %}>
+              <i class="fa fa-fw fa-dashboard"></i>
+              <span class="nav-link-text text-white">Cambiar Mi Contraseña</span>
+            </a>
+          </li>
+        {% endif %}
+        <!-- termina block para inestar los links del menu lateral izquierdo -->
+      </ul>
+      <!-- Termina Menu lateral izquierdo -->
+      <!-- Comienza Menu Superior Derecho -->
+      <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item bg-azul">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link text-white" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+        </li>
+      </ul>
+      <!-- Termina Menu Superior Derecho -->
+    </div>
+  </nav>
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">Usuario Conectado: <strong>{{user.first_name}} {{user.last_name}}</strong></li>
+      </ol>
+      {% include 'bootstrap4/messages.html' %}
+      {% block bodyblock %}
+
+      {% endblock %}
+      <hr>
+    <!-- /.container-fluid-->
+    <!-- /.content-wrapper-->
+    <footer class="sticky-footer">
+      <div class="container">
+        <div class="text-center">
+          <small>InstraSUT - 2018</small>
+        </div>
+      </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Listo para salir?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Seleccione "Logout" debajo si esta listo para cerrar su sesion actual.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <a class="btn btn-primary" href="{% url 'logout' %}">Salir</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    {% block js %}
+
+      <script src="{%  static 'vendor/jquery/jquery.min.js' %}"></script>
+      <script src="{%  static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="{%  static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+      <!-- Page level plugin JavaScript-->
+      <script src="{%  static 'vendor/chart.js/Chart.min.js' %}"></script>
+      <script src="{%  static 'vendor/datatables/jquery.dataTables.js' %}"></script>
+      <script src="{%  static 'vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="{%  static 'js/sb-admin.min.js' %}"></script>
+      <!-- Custom scripts for this page-->
+      <script src="{%  static 'js/sb-admin-datatables.min.js' %}"></script>
+      <script src="{%  static 'js/sb-admin-charts.min.js' %}"></script>
+      <!-- DatePicker -->
+      <script src="{%  static 'js/bootstrap-datepicker.js' %}"></script>
+      <script src="{%  static 'js/bootstrap-datepicker.es.min.js' %}"></script>
+
+      <!-- Jquery UI -->
+      <!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+      <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+      <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script> -->
+
+      <script>
+        $('.datepicker').datepicker({
+        });
+       </script>
+      <script>
+
+        $("#id_username").on("keyup", function(event) {
+          var rut = $("#id_username").val();
+          var rutFormateado = formato_rut(rut);
+          //alert(rutFormateado);
+          $("#id_username").val(rutFormateado);
+
+        } );
+
+
+
+
+        function formato_rut(rut){
+          var sRut1 = rut;
+          sRut1=sRut1.replace('-', '');// se elimina el guion
+          sRut1=sRut1.replace('.', '');// se elimina el primer punto
+          sRut1=sRut1.replace('.', '');// se elimina el segundo punto
+          sRut1 = sRut1.replace(/k$/,"K");
+
+          //contador de para saber cuando insertar el . o la -
+          var nPos = 0;
+          //Guarda el rut invertido con los puntos y el gui&oacute;n agregado
+          var sInvertido = "";
+          //Guarda el resultado final del rut como debe ser
+          var sRut = "";
+          for(var i = sRut1.length - 1; i >= 0; i-- ){
+            sInvertido += sRut1.charAt(i);
+            if (i == sRut1.length - 1 )
+              sInvertido += "-";
+            else if (nPos == 3){
+              sInvertido += ".";
+              nPos = 0;
+            }
+            nPos++;
+          }
+          for(var j = sInvertido.length - 1; j >= 0; j-- ){
+            if (sInvertido.charAt(sInvertido.length - 1) != ".")
+              sRut += sInvertido.charAt(j);
+            else if (j != sInvertido.length - 1 )
+              sRut += sInvertido.charAt(j);
+          }
+          //Pasamos al campo el valor formateado
+          return sRut.toUpperCase();
+        }
+
+        function revisarDigito( dvr ){
+          dv = dvr + ""
+
+          if ( dv != '0' && dv != '1' && dv != '2' && dv != '3' && dv != '4' && dv != '5' && dv != '6' && dv != '7' && dv != '8' && dv != '9' && dv != 'k'  && dv != 'K')   {
+
+            alert("Debe ingresar un digito verificador valido");
+
+            window.document.form1.rut.focus();
+
+            window.document.form1.rut.select();
+
+            return false;
+
+          }
+
+        return true;
+
+        }
+
+
+
+
+
+
+      </script>
+
+    {% endblock %}
+  </div>
+  </body>
+
+  </html>

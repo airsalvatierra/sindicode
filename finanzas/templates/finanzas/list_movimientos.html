@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% load staticfiles i18n %}
+{% load humanize %}
+
+{% block bodyblock %}
+  <div class="card mb-3">
+   <div class="card-header">
+     <i class="fa fa-table"></i>Ver/Editar Movimientos Financieros</div>
+   <div class="card-body">
+     <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+         <thead>
+           <tr>
+             <th>Folio</th>
+             <th>Fecha</th>
+             <th>Item</th>
+             <th>Subitem</th>
+             <th>Tipo</th>
+             <th>Monto</th>
+             <th>Estado</th>
+           </tr>
+         </thead>
+         <tbody>
+           {% if movimientos %}
+            {% for mov in movimientos %}
+             <tr>
+               {% if mov.estado == 'Cerrado'  %}
+                <td> <a href="{% url 'finanzas:view_movimiento' pk=mov.pk %}">{{mov.folio}}</a> </td>
+               {% else %}
+                <td> <a href="{% url 'finanzas:edit_movimiento_full' pk=mov.pk %}">{{mov.folio}}</a> </td>
+               {% endif %}
+               <td>{{ mov.fecha|date:"d/M/Y" }}</td>
+               <td>{{ mov.item }}</td>
+               <td>{{ mov.subitem }}</td>
+               <td>{{ mov.tipo_mov }}</td>
+               <td>${% if mov.monto %}{{mov.monto|intcomma }}{% else %}0{% endif %}</td>
+               <td>{{ mov.estado }}</td>
+             </tr>
+            {% endfor %}
+           {% else %}
+             <tr>
+               <p>Actualmente no existen movimientos no Cerrados</p>
+             </tr>
+           {% endif %}
+         </tbody>
+       </table>
+     </div>
+     <a class="fa fa-file-excel-o" href="xls/"></a>
+     <a class="fa fa-file-pdf-o" href="pdf/"></a>
+   </div>
+  </div>
+{% endblock %}

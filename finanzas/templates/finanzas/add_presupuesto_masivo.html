@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load staticfiles i18n %}
+{% load crispy_forms_tags %}
+{% load poll_extras %}
+
+{% block bodyblock %}
+  <form class="form-group" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h3>Actualizar Presupuestos</h3>
+    <hr>
+    {{ formset.management_form }}
+        {% for form in formset %}
+          <div class="row">
+            {% if forloop.first %}
+              <div class="col-md-6 col-12">Item - Subitem</div>
+              <div class="col-md-6 col-12">Monto</div>
+            {% endif %}
+            <div class="col-md-6 col-12">{{ form.item_linked|as_crispy_field }}</div>
+            <div class="col-md-2 col-12">{{ form.monto|as_crispy_field }}</div>
+            <div class="col-md-2 col-12" hidden=True>{{ form.id|as_crispy_field }}</div>
+          </div>
+        {% endfor %}
+    <input type="submit" class="btn btn-primary" value="Actualizar Presupuestos"></input>
+  </form>
+
+{% endblock %}

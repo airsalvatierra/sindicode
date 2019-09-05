@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load staticfiles i18n %}
+{% load poll_extras %}
+
+{% block bodyblock %}
+  <div class="card mb-3">
+   <div class="card-header">
+     <i class="fa fa-table"></i>Lista de Socios con Roles</div>
+   <div class="card-body">
+     <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+         <thead>
+           <tr>
+             <th>Rut</th>
+             <th>Nombre</th>
+             <th>Apellido Paterno</th>
+             <th>Apellido Materno</th>
+             <th>Correo Electronico</th>
+             <th>Telefono</th>
+             <th>Ver</th>
+           </tr>
+         </thead>
+         <tbody>
+           {% if socios %}
+            {% for lista in socios %}
+             <tr>
+               <td>{{ lista.username|rut_format }} </td>
+               <td>{{ lista.first_name }}</td>
+               <td>{{ lista.last_name }}</td>
+               <td>{% if lista.ape_materno %}{{lista.ape_materno}}{% else %}{% endif %}</td>
+               <td>{{ lista.email }}</td>
+               <td>{% if lista.tel_celular %}{{lista.tel_celular}}{% else %}{% endif %}</td>
+               <td> <a href="{% url 'socios:edit_roles' pk=lista.pk %}">Ver/Editar Roles</a> </td>
+             </tr>
+            {% endfor %}
+           {% else %}
+             <tr>
+               <p>Actualmente no existen socios</p>
+             </tr>
+           {% endif %}
+         </tbody>
+       </table>
+     </div>
+   </div>
+  </div>
+{% endblock %}

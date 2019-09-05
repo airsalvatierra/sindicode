@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load staticfiles i18n %}
+{% load humanize %}
+{% load poll_extras %}
+
+{% block bodyblock %}
+  <div class="card mb-3">
+   <div class="card-header">
+     <i class="fa fa-table"></i>Log de cambio de los Socios</div>
+   <div class="card-body">
+     <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+         <thead>
+           <tr>
+             <th>Fecha Operacion</th>
+             <th>Rut</th>
+             <th>Operacion</th>
+             <th>Usuario que hizo el cambio</th>
+           </tr>
+         </thead>
+         <tbody>
+           {% if logs %}
+            {% for log in logs %}
+             <tr>
+               <td>{{ log.fec_operacion|date:"d/M/Y" }}</td>
+               <td>{{ log.rut|rut_format }}</td>
+               <td>{{ log.operacion }}</td>
+               <td>{{ log.user_do|rut_format }}</td>
+             </tr>
+            {% endfor %}
+           {% else %}
+             <tr>
+               <p>Actualmente no existe log</p>
+             </tr>
+           {% endif %}
+         </tbody>
+       </table>
+     </div>
+   </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block bodyblock %}
+<h1>Actualizar Justificacion - Comite Etica</h1>
+<hr>
+<form method="POST" class="form" enctype="multipart/form-data" action="">
+  {% csrf_token %}
+  <div class="row">
+    <div class="col-md-2 col-12">{{ form.fec_evento|as_crispy_field }}</div>
+    <div class="col-md-2 col-12">{{ form.rut_socio|as_crispy_field  }}</div>
+    <div class="col-md-2 col-12">{{ form.nombre|as_crispy_field  }}</div>
+    <div class="col-md-2 col-12">{{ form.apellido|as_crispy_field  }}</div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-12">{{ form.email|as_crispy_field }}</div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 col-12">{{ form.est_asistencia|as_crispy_field  }}</div>
+    <div class="col-md-2 col-12">{{ form.est_notificacion|as_crispy_field }}</div>
+    <div class="col-md-2 col-12">{{ form.est_justificacion|as_crispy_field }}</div>
+    <div class="col-md-2 col-12">{{ form.est_apelacion|as_crispy_field }}</div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-12">{{ form.comentario|as_crispy_field }}</div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-12">{{ form.arc_justificacion|as_crispy_field }}</div>
+  </div>
+  <input type="submit" class="btn btn-primary" value="Actualizar Justificacion"></input>
+</form>
+{% endblock %}

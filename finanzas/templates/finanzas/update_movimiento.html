@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load staticfiles i18n %}
+{% load crispy_forms_tags %}
+{% load poll_extras %}
+
+{% block bodyblock %}
+  <form class="form-group" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h3>Ver/Editar Movimiento</h3>
+    <hr>
+    <div class="row">
+      <div class="col-md-2 col-12">{{ mov_form.folio|as_crispy_field }}</div>
+      <div class="col-md-2 col-12">{{ mov_form.fecha|as_crispy_field }}</div>
+      <div class="col-md-2 col-12">{{ mov_form.tipo_mov|as_crispy_field }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-12">{{ mov_form.num_boleta_factura|as_crispy_field  }}</div>
+      <div class="col-md-4 col-12">{{ mov_form.nombre_proveedor|as_crispy_field  }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-12">{{ mov_form.monto|as_crispy_field }}</div>
+      <div class="col-md-3 col-12">{{ mov_form.num_cheque|as_crispy_field }}</div>
+      <div class="col-md-2 col-12">{{ mov_form.is_cheque|as_crispy_field  }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-12">{{ mov_form.item_linked|as_crispy_field }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-12">{{ mov_form.estado|as_crispy_field  }}</div>
+      <div class="col-md-2 col-12">{{ mov_form.rut_socio_asociado|as_crispy_field }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-12">{{ mov_form.adjunto|as_crispy_field }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-12">{{ mov_form.voucher|as_crispy_field }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-12">{{ mov_form.caratula|as_crispy_field }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-12">{{ mov_form.comentario|as_crispy_field }}</div>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Actualizar Movimiento"></input>
+    <a class="btn btn-danger" href="{% url 'finanzas:delete_movimiento' pk=pk %}">Eliminar</a>
+  </form>
+
+{% endblock %}

@@ -1,0 +1,309 @@
+{% extends "base.html" %}
+
+{% load staticfiles i18n %}
+{% load bootstrap4 %}
+{% load poll_extras %}
+{% load humanize %}
+
+{% block bodyblock %}
+  <form class="form-group" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-2 col-12">
+        {% if foto %}
+          <img src="{{ foto.url }}" class="img-fluid img-thumbnail rounded mx-auto d-block" alt="Responsive image">
+        {% else %}
+          <img src="{% static "images/blank-profile.png" %}" class="img-fluid img-thumbnail rounded mx-auto d-block">
+        {% endif %}
+      </div>
+      <hr>
+    </div>
+    <hr>
+    <h5>Informacion Personal</h5>
+    <div class="row">
+      <div class="col-md-2 col-12">{% bootstrap_field user_form.first_name %}</div>
+      <div class="col-md-2 col-12">{% bootstrap_field user_form.nom_adicional  %}</div>
+      <div class="col-md-2 col-12">{% bootstrap_field user_form.last_name  %}</div>
+      <div class="col-md-2 col-12">{% bootstrap_field user_form.ape_materno  %}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-12">{% bootstrap_field user_form.username  %}</div>
+      <div class="col-md-2 col-12">{% bootstrap_field user_form.fec_nacimiento %}</div>
+      <div class="col-md-2 col-12">{% bootstrap_field user_form.estado_civil  %}</div>
+      <div class="col-md-1 col-12">{% bootstrap_field user_form.num_hijos  %}</div>
+    </div>
+    <h5>Informacion de Contacto</h5>
+    <div class="row">
+      <div class="col-md-3 col-12">{% bootstrap_field user_form.email  %}</div>
+      <div class="col-md-2 col-12">{% bootstrap_field user_form.tel_celular  %}</div>
+      <div class="col-md-2 col-12">{% bootstrap_field user_form.for_contacto  %}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-12">{% bootstrap_field user_form.dir_domicilio  %}</div>
+      <div class="col-md-2 col-12">{% bootstrap_field user_form.comuna  %}</div>
+    </div>
+    <h5>Informacion Laboral</h5>
+    <div class="row">
+      <div class="col-md-2 col-12">{% bootstrap_field user_form.fec_ing_metro %}</div>
+      <div class="col-md-2 col-12">{% bootstrap_field user_form.cargo  %}</div>
+      <div class="col-md-3 col-12">{% bootstrap_field user_form.lug_trabajo  %}</div>
+      <div class="col-md-3 col-12">{% bootstrap_field user_form.turno  %}</div>
+    </div>
+    <h5>Informacion Sindical</h5>
+    <div class="row align-items-center">
+      <div class="col-md-2 col-12">{% bootstrap_field user_form.fec_ing_sindicato %}</div>
+      <div class="col-md-2 col-12">{% bootstrap_field user_form.car_sindical  %}</div>
+      <div class="col-md-2 col-12">{% bootstrap_field user_form.is_office  %}</div>
+      <div class="col-md-2 col-12">{% bootstrap_field user_form.estado_socio  %}</div>
+    </div>
+    <div class="row align-items-center">
+      <div class="col-md-2 col-12">{% bootstrap_field user_form.foto %}</div>
+    </div>
+    <input type="submit" class="btn btn-success" value="Actualizar Socio"></input>
+  </form>
+
+  <div class="card mb-3">
+   <div class="card-header">
+     <i class="fa fa-table"></i>Cargas </div>
+   <div class="card-body">
+     <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+         <thead>
+           <tr>
+             <th>Tipo de Carga</th>
+             <th>Nombre</th>
+             <th>Apellido Paterno</th>
+             <th>Apellido Materno</th>
+             <th>Edad</th>
+             <th>Eliminar</th>
+           </tr>
+         </thead>
+         <tbody>
+            {% for lista in cargas %}
+             <tr>
+               <td>{{ lista.tipo_carga }} </td>
+               <td>{{ lista.nombre }}</td>
+               <td>{{ lista.ape_paterno }}</td>
+               <td>{% if lista.ape_materno %}{{lista.ape_materno}}{% else %}{% endif %}</td>
+               <td>{{ lista.edad }}</td>
+               <td> <a href="{% url 'socios:delete_carga' pk=lista.pk %}"><button type="button" name="button" class="btn btn-danger">Eliminar</button></a> </td>
+             </tr>
+            {% endfor %}
+         </tbody>
+       </table>
+     </div>
+     <hr>
+     <p><a href="{% url 'socios:crear_carga' pk=socio.pk %}"><button type="button" name="button" class="btn btn-primary btn-block">Agregar Carga</button></a></p>
+   </div>
+  </div>
+
+  <div class="card mb-3">
+   <div class="card-header">
+     <i class="fa fa-table"></i>Atenciones al Socio</div>
+   <div class="card-body">
+     <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+         <thead>
+           <tr>
+             <th>Fecha Atencion</th>
+             <th>Tipo de Atencion</th>
+             <th>Detalle</th>
+             <th>Adjunto</th>
+           </tr>
+         </thead>
+         <tbody>
+          {% for lista in eventos %}
+           <tr>
+             <td>{{ lista.fec_evento|date:"d/M/Y"  }} </td>
+             <td>{{ lista.tipo_evento }}</td>
+             <td>{{ lista.detalle }}</td>
+             <td> {% if lista.adjunto %}<a href="{{lista.adjunto.url}}">{{lista.adjunto.name}}</a> {% else %}-{% endif %}</td>
+           </tr>
+          {% endfor %}
+         </tbody>
+       </table>
+     </div>
+     <hr>
+     <p><a href="{% url 'socios:crear_evento' pk=socio.pk %}"><button type="button" name="button" class="btn btn-primary btn-block">Crear Atencion</button></a></p>
+   </div>
+  </div>
+
+  <div class="card mb-3">
+   <div class="card-header">
+     <i class="fa fa-table"></i>Finanzas Asociadas</div>
+   <div class="card-body">
+     <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable3" width="100%" cellspacing="0">
+         <thead>
+           <tr>
+             <th>Fecha</th>
+             <th>Folio</th>
+             <th>Item</th>
+             <th>Monto</th>
+             <th>Comentario</th>
+           </tr>
+         </thead>
+         <tbody>
+          {% for fin in finanzas %}
+           <tr>
+             <td>{{ fin.fecha|date:"d/M/Y" }}</td>
+             <td>{{ fin.folio }} </td>
+             <td>{{ fin.item_linked }} </td>
+             <td>${{ fin.monto|intcomma }}</td>
+             <td>{{ fin.comentario }}</td>
+           </tr>
+          {% endfor %}
+         </tbody>
+       </table>
+     </div>
+   </div>
+  </div>
+
+  <div class="card mb-3">
+   <div class="card-header">
+     <i class="fa fa-table"></i>Lista de Asistencias</div>
+   <div class="card-body">
+     <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable4" width="100%" cellspacing="0">
+         <thead>
+           <tr>
+             <th>Fecha Evento</th>
+             <th>Evento</th>
+             <th>Email</th>
+             <th>Estado Asistencia</th>
+           </tr>
+         </thead>
+         <tbody>
+          {% for asi in asistencias %}
+           <tr>
+             <td>{{ asi.fec_evento|date:"d/M/Y" }}</td>
+             <td>{{ asi.asistenciaenc.tipo_evento }} </td>
+             <td>{{ asi.email }}</td>
+             <td>{% if asi.est_asistencia == True %}Asistio{% else %}No Asistio{% endif %}</td>
+           </tr>
+          {% endfor %}
+         </tbody>
+       </table>
+     </div>
+   </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-header">
+        <i class="fa fa-table"></i> Log De Actividades</div>
+      <div class="card-body">
+        <div class="table-responsive">
+           <table class="table table-bordered" id="dataTable5" width="100%" cellspacing="0" enctype="multipart/form-data">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Operacion</th>
+                <th>Usuario Operacion</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for lista in log %}
+                <tr>
+                  <td>{{ lista.fec_operacion|date:"d/M/Y"  }}</td>
+                  <td>{{ lista.operacion }}</td>
+                  <td>{{ lista.user_do|rut_format }}</td>
+                </tr>
+              {% endfor %}
+          </table>
+        </div>
+      </div>
+  </div>
+
+
+    {% for rol in roles %}
+      {% if rol.rol.tipo_rol == 'Administracion' %}
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fa fa-table"></i> Roles del Socio</div>
+            <div class="card-body">
+              <table class="table table-bordered" id="dataTable9" width="100%" cellspacing="0" enctype="multipart/form-data">
+                  <thead>
+                    <tr>
+                      <th>Rol</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <form action="editarol/"  enctype="multipart/form-data"  method="POST">
+                      {% csrf_token %}
+                    <tr>
+                      <td><label> Administración</label></td>
+                      {% if flagradmin %}
+                        <td><input type="checkbox" name="roladmin" {{ flagradmin }} /></td>
+                      {% endif %}
+                    </tr>
+                    <tr>
+                      <td><label> Socio</label></td>
+                      {% if flagrsocio %}
+                        <td><input type="checkbox" name="rolsocio" {{ flagrsocio }} ></td>
+                      {% endif %}
+                    </tr>
+                    <tr>
+                      <td><label> Mantención</label></td>
+                      {% if flagrmantencion %}
+                        <td><input type="checkbox" name="rolmantencion" {{ flagrmantencion }}/></td>
+                      {% endif %}
+                    </tr>
+                    <tr>
+                      <td><label> Asistencia</label></td>
+                      {% if flagrasistencia %}
+                        <td><input type="checkbox" name="rolasistencia" {{ flagrasistencia }} /></td>
+                      {% endif %}
+                    </tr>
+                    <tr>
+                      <td><label>Finanzas</label></td>
+                      {% if flagrfinanzas %}
+                        <td><input type="checkbox" name="rolfinanzas" {{ flagrfinanzas }} /></td>
+                      {% endif %}
+                    </tr>
+                     <tr>
+                      <td><label> Historial</label></td>
+                      {% if flagrhistorial %}
+                        <td><input type="checkbox" name="rolhistorial" {{ flagrhistorial}}/ ></td>
+                      {% endif %}
+                    </tr>
+                    <!-- <tr>
+                      <td><label> Aprobador</label></td>
+                      {% if flagraprobador %}
+                        <td><input type="checkbox" name="rolaprobador" {{ flagraprobador}} /></td>
+                      {% endif %}
+
+                    </tr> -->
+                    <tr>
+                      <td><label> Comite Etica</label></td>
+                      {% if flagrcometica %}
+                        <td><input type="checkbox" name="rolcometica" {{ flagrcometica}} /></td>
+                      {% endif %}
+
+                    </tr>
+                    <tr>
+                      <td><label> Contador</label></td>
+                      {% if flagrcontador %}
+                        <td><input type="checkbox" name="rolcontador" {{ flagrcontador}} /></td>
+                      {% endif %}
+
+                    </tr>
+                    <tr>
+                      <td><label> Ver Movimientos Financieros</label></td>
+                      {% if flagrverfin %}
+                        <td><input type="checkbox" name="rolverfin" {{ flagrverfin }} /></td>
+                      {% endif %}
+
+                    </tr>
+
+                  </tbody>
+                </table>
+                <input type="submit" class="btn btn-success" value="Actualizar Roles"></input>
+                </form>
+            </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+{% endblock %}

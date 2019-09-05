@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load staticfiles i18n %}
+
+{% block bodyblock %}
+  <h2 class="text-center">Bienvenido a IntraSUT</h2>
+  <div class="text-center">
+    <img src="{% static 'images/logosut.png' %}" class="h-25 d-inline-block" style="width: 150px" alt="Responsive image">
+  </div>
+  <div class="container">
+    <hr>
+    <p>Estimado Socio:</p>
+    <p>Te damos la bienvenida al nuevo sistema (Intranet) del Sindicato Unificado de Trabajadores de Metro. Aqui podras revisar y modificar tu informacion personal.</p>
+    <h3>¿Como usar?</h3>
+    <ul>
+      <li>En el menu de navegacion estan las opciones "Mi Informacion" y "Cambiar Mi Contraseña"</li>
+      <li>En "Mi Informacion" puedes revisar y modificar tu informacion personal, incluyendo subir una foto de perfil</li>
+      <li>En "Cambiar Mi Contraseña" puedes cambiar tu actual contraseña por una nueva</li>
+      <li>Puedes solicitar mediante un correo electronico que se te habilite la funcionalidad para ver las finanzas del Sindicato</li>
+      <li>Otras funcionalidades estan habilitadas de acuerdo a los roles que tu tengas dentro del Sindicato</li>
+    </ul>
+    <p><strong>NOTA: </strong>Dentro de "Mi Informacion" solo se puedes modificar algunos datos personales, para cambiar el resto de la informacion personal debes enviarnos un correo electronico a
+      sindicato.unificado.metro@gmail.com o llamar por telefono a +56 2 2329 6300</p>
+  </div>
+
+{% endblock %}

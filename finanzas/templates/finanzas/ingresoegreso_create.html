@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block bodyblock %}
+  <h2>Ingreso Movimiento Financiero</h2>
+  <hr>
+  <form class="form" id="IngresoEsgresoForm" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-2 col-12">{{ ingresoegreso_form.fecha|as_crispy_field }}</div>
+      <div class="col-md-2 col-12">{{ ingresoegreso_form.num_boleta_factura|as_crispy_field  }}</div>
+      <div class="col-md-2 col-12">{{ ingresoegreso_form.nombre_proveedor|as_crispy_field  }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-12">{{ ingresoegreso_form.monto|as_crispy_field }}</div>
+      <div class="col-md-2 col-12">{{ ingresoegreso_form.num_cheque|as_crispy_field }}</div>
+      <div class="col-md-2 col-12">{{ ingresoegreso_form.is_cheque|as_crispy_field  }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-12">{{ ingresoegreso_form.item_linked|as_crispy_field }}</div>
+      <div class="col-md-2 col-12">{{ ingresoegreso_form.tipo_mov|as_crispy_field }}</div>
+      <div class="col-md-2 col-12">{{ ingresoegreso_form.rut_socio_asociado|as_crispy_field }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-12">{{ ingresoegreso_form.adjunto|as_crispy_field }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-12">{{ ingresoegreso_form.voucher|as_crispy_field }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-12">{{ ingresoegreso_form.comentario|as_crispy_field }}</div>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Ingresar Movimiento"></input>
+  </form>
+{% endblock %}

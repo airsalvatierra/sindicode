@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block bodyblock %}
+  <div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#">Sistema</a>
+        </li>
+        <li class="breadcrumb-item active">Ingreso de Socios</li>
+      </ol>
+      <!-- Icon Cards-->
+      <!-- Area Chart Example-->
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-area-chart"></i> Ingreso de Socios del Sindicato</div>
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-6">
+                  {{ form.as_table }}
+                </div>
+              </div>
+            </div>
+            <input class="btn btn-primary" type="submit" value="Guardar"/>
+          </form>
+        </div>
+      </div>
+    </div>
+{% endblock %}

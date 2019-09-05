@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load staticfiles i18n %}
+{% load crispy_forms_tags %}
+
+{% block bodyblock %}
+  <h1>Ingresar Carga</h1>
+  <hr>
+  <form class="form-group" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-3 col-12">{{ evento_form.socio|as_crispy_field  }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-12">{{ evento_form.tipo_evento|as_crispy_field  }}</div>
+      <div class="col-md-2 col-12">{{ evento_form.fec_evento|as_crispy_field  }}</div>
+      <div class="col-md-2 col-12">{{ evento_form.adjunto|as_crispy_field  }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-10 col-12">{{ evento_form.detalle|as_crispy_field  }}</div>
+    </div>
+    <input type="submit" class="btn btn-success" value="Crear"></input>
+  </form>
+
+{% endblock %}
